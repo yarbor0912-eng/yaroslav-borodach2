@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ярослав Бородач | Книги, Биография, Команда</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111118;
+            --surface2: #191925;
+            --gold: #c9a84c;
+            --gold-light: #e8d48b;
+            --red: #8b0000;
+            --red-light: #c0392b;
+            --text: #d0d0d8;
+            --text-dim: #707080;
+            --border: #252530;
+            --radius: 8px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.6);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* Основа с пепельным фоном и нижним свечением */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(139,0,0,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139,0,0,0.08) 0%, transparent 70%),
+                /* НИЖНЕЕ СВЕЧЕНИЕ ЗОЛОТО-КРАСНОГО ОГНЯ */
+                radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.35) 0%, rgba(139,0,0,0.25) 30%, transparent 70%),
+                radial-gradient(ellipse at 30% 100%, rgba(201,168,76,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 100%, rgba(201,168,76,0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Частицы-пепел (статические, но могут анимироваться) */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatAsh 12s linear infinite;
+            opacity: 0.35;
+            font-size: 14px;
+            color: #888;
+            text-shadow: 0 0 4px rgba(200,180,160,0.2);
+            font-weight: 100;
+            user-select: none;
+        }
+        @keyframes floatAsh {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(720deg) scale(1.2); opacity: 0; }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--red);
+            z-index: 1000;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: 0 2px 20px rgba(139,0,0,0.3);
+        }
+        .logo {
+            font-size: 1.3em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--gold-light), var(--red-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+        .nav-links { display: flex; gap: 12px; list-style: none; align-items: center; }
+        .nav-links a, .nav-links button {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8em;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 3px;
+            background: none;
+            border: none;
+        }
+        .nav-links a:hover, .nav-links button:hover { color: var(--gold); background: rgba(201,168,76,0.1); }
+        .btn-login { background: linear-gradient(135deg, var(--red), #5a0000) !important; color: #fff !important; padding: 6px 16px !important; font-weight: 700; }
+        .btn-logout { border: 1px solid var(--red) !important; color: var(--red-light) !important; padding: 6px 16px !important; font-weight: 700; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 80px; position: relative; z-index: 1; }
+        .hero h1 { font-size: 3.5em; font-weight: 900; letter-spacing: 3px; background: linear-gradient(135deg, var(--gold-light), var(--red-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .subtitle { font-size: 1.2em; color: var(--text-dim); margin-bottom: 35px; font-style: italic; }
+        .btn { display: inline-block; padding: 10px 28px; border-radius: 3px; font-weight: 700; font-size: 0.9em; text-decoration: none; transition: all 0.3s; cursor: pointer; letter-spacing: 1px; font-family: 'Segoe UI', sans-serif; border: none; margin: 4px; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #a07828); color: #1a1a1a; }
+        .btn-gold:hover { transform: translateY(-2px); }
+        .btn-outline { border: 2px solid var(--gold); color: var(--gold); background: transparent; }
+        .btn-outline:hover { background: var(--gold); color: #1a1a1a; }
+        .section { padding: 60px 20px; position: relative; z-index: 1; }
+        .section-title { text-align: center; font-size: 2em; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; background: linear-gradient(135deg, var(--gold-light), var(--red-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { text-align: center; color: var(--text-dim); margin-bottom: 40px; font-style: italic; font-size: 0.9em; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.4s; }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--gold); }
+        .card-cover { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 2.5em; background-size: cover; background-position: center; position: relative; }
+        .card-cover img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+        .card-info { padding: 14px; }
+        .card-info h3 { font-size: 1em; color: var(--gold-light); margin-bottom: 4px; }
+        .card-info .card-series { font-size: 0.7em; color: var(--red-light); margin-bottom: 4px; letter-spacing: 1px; }
+        .card-info p { color: var(--text-dim); font-size: 0.75em; margin-bottom: 8px; }
+        .card-info .price { font-size: 1.1em; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
+        .card-info .price.free { color: #2ecc71; }
+        .status-badge { position: absolute; top: 8px; right: 8px; padding: 2px 6px; border-radius: 3px; font-size: 0.6em; font-weight: 700; z-index: 2; }
+        .badge-new { background: #2ecc71; color: #0a0a0a; }
+        .badge-soon { background: var(--gold); color: #0a0a0a; }
+        .badge-free { background: #3498db; color: #fff; }
+        .badge-premium { background: var(--red-light); color: #fff; }
+        .admin-actions { display: none; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+        .admin-actions.active { display: flex; }
+        .admin-actions .btn { padding: 3px 6px; font-size: 0.6em; margin: 0; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--surface); border: 1px solid var(--red); border-radius: var(--radius); padding: 20px; max-width: 500px; width: 90%; position: relative; max-height: 80vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: var(--text-dim); font-size: 1.2em; cursor: pointer; }
+        .modal h3 { color: var(--gold); margin-bottom: 10px; font-size: 1.1em; }
+        .modal label { color: var(--text-dim); font-size: 0.7em; display: block; margin-top: 6px; font-family: 'Segoe UI', sans-serif; }
+        .modal input, .modal textarea, .modal select { width: 100%; padding: 7px; margin: 2px 0 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: 'Georgia', serif; font-size: 0.8em; }
+        .modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: var(--gold); }
+        .modal textarea { min-height: 60px; resize: vertical; }
+        .reader-modal .modal-content { max-width: 850px; max-height: 85vh; padding: 15px; }
+        .book-viewer { display: flex; background: #1a1a1a; border-radius: var(--radius); overflow: hidden; min-height: 400px; }
+        .book-page { flex: 1; padding: 25px; background: #1a1a0a; color: #d0c8b0; font-size: 0.9em; line-height: 1.7; white-space: pre-wrap; min-height: 400px; max-height: 55vh; overflow-y: auto; position: relative; }
+        .book-page.left { border-right: 2px solid #2a2a1a; }
+        .book-page img { max-width: 100%; border-radius: 4px; margin: 10px 0; }
+        .page-number { position: absolute; bottom: 8px; right: 15px; color: #555; font-size: 0.65em; }
+        .page-nav { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; gap: 8px; }
+        .page-nav button { padding: 6px 16px; border-radius: 3px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.8em; }
+        .page-nav button:hover { border-color: var(--gold); color: var(--gold); }
+        @keyframes pageFlipLeft { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(-15deg); } 100% { transform: rotateY(0deg); } }
+        @keyframes pageFlipRight { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(15deg); } 100% { transform: rotateY(0deg); } }
+        .flip-left { animation: pageFlipLeft 0.4s ease; }
+        .flip-right { animation: pageFlipRight 0.4s ease; }
+        .bio-section { background: var(--surface); border-top: 1px solid var(--red); border-bottom: 1px solid var(--red); }
+        .bio-tabs, .universe-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .bio-tab, .universe-tab { padding: 8px 22px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim); cursor: pointer; border-radius: 3px; font-family: 'Segoe UI', sans-serif; font-weight: 600; transition: all 0.3s; font-size: 0.85em; }
+        .bio-tab:hover, .universe-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .bio-tab.active, .universe-tab.active { background: var(--red); color: #fff; border-color: var(--red); }
+        .bio-content, .universe-content { max-width: 750px; margin: 0 auto; padding: 20px; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); }
+        .bio-content img, .universe-content img { max-width: 180px; border-radius: 8px; margin: 0 auto 15px; display: block; border: 3px solid var(--gold); }
+        .bio-content p, .universe-content p { color: var(--text); line-height: 1.8; }
+        .bio-content[contenteditable="true"], .universe-content[contenteditable="true"] { border: 2px dashed var(--gold); }
+        .file-upload-area { border: 2px dashed var(--border); border-radius: var(--radius); padding: 15px; text-align: center; cursor: pointer; margin: 8px 0; transition: all 0.3s; }
+        .file-upload-area:hover { border-color: var(--gold); }
+        .file-upload-area input { display: none; }
+        .team-list { max-width: 600px; margin: 20px auto; }
+        .team-member { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 18px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
+        .toast { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 4px; font-family: 'Segoe UI', sans-serif; font-weight: 600; z-index: 3000; animation: slideIn 0.3s ease; }
+        .toast-success { background: #27ae60; color: #fff; }
+        .toast-error { background: var(--red-light); color: #fff; }
+        .toast-warning { background: var(--gold); color: #0a0a0a; }
+        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        footer { 
+            text-align: center; 
+            padding: 30px 20px; 
+            border-top: 2px solid var(--red); 
+            color: var(--text-dim); 
+            font-size: 0.7em; 
+            position: relative; 
+            z-index: 1;
+            background: transparent;
+            /* дополнительное свечение на самом футере */
+            box-shadow: 0 -20px 60px rgba(201,168,76,0.15);
+        }
+        /* Полоса огня внизу (дополнительный декоративный элемент) */
+        .fire-glow {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.3) 0%, rgba(139,0,0,0.15) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(8px);
+        }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.2em; } .cards-grid { grid-template-columns: 1fr; } .book-viewer { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <!-- Полоса огня снизу (золото-красное свечение) -->
+    <div class="fire-glow"></div>
+
+    <div id="particles"></div>
+    <nav>
+        <span class="logo" onclick="scrollToTop()">ЯРОСЛАВ БОРОДАЧ</span>
+        <div class="nav-links">
+            <a href="#books-section">📚 Книги</a>
+            <a href="#universe-section">🌌 Вселенная</a>
+            <a href="#bio-section">👤 Био</a>
+            <a href="#team-section">👥 Команда</a>
+            <a href="#donate-section">💎 Донаты</a>
+            <button id="admin-nav-btn" class="btn-login" style="display:none;" onclick="toggleAdminPanel()">⚙️ Админ</button>
+            <button id="login-nav-btn" class="btn-login" onclick="showLoginModal()">🔑 Войти</button>
+            <button id="register-nav-btn" class="btn-outline" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;border-radius:3px;font-weight:700;cursor:pointer;" onclick="showRegisterModal()">📝 Регистрация</button>
+            <button id="logout-nav-btn" class="btn-logout" style="display:none;" onclick="logout()">Выйти</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ЯРОСЛАВ БОРОДАЧ</h1>
+            <p class="subtitle">«Аркей. Марш Справедливости» — Вселенная Аркейстан</p>
+            <a href="#books-section" class="btn btn-gold">📚 Книги</a>
+            <a href="#universe-section" class="btn btn-outline">🌌 Вселенная</a>
+            <a href="#bio-section" class="btn btn-outline">👤 Биография</a>
+            <a href="#team-section" class="btn btn-outline">👥 Команда</a>
+        </div>
+    </section>
+
+    <!-- ВСЕЛЕННАЯ (ПУСТАЯ - АДМИН ДОБАВЛЯЕТ САМ) -->
+    <section class="section bio-section" id="universe-section">
+        <h2 class="section-title">🌌 ВСЕЛЕННАЯ АРКЕЙСТАН</h2>
+        <p class="section-subtitle">Миры, созданные Ярославом Бородачом</p>
+        <div class="universe-tabs" id="universe-tabs"></div>
+        <div class="universe-content" id="universe-content">
+            <img id="universe-image" src="" alt="Изображение" style="display:none;">
+            <p id="universe-text">Нет добавленных вселенных. Администратор может добавить их через админ-панель.</p>
+            <div id="universe-admin-actions" style="display:none; margin-top:12px; text-align:right;">
+                <button class="btn btn-gold" onclick="editUniverse()" style="font-size:0.75em;padding:6px 14px;">✏️ Редактировать</button>
+                <button class="btn btn-gold" onclick="document.getElementById('universe-image-input').click()" style="font-size:0.75em;padding:6px 14px;">📷 Сменить изображение</button>
+                <input type="file" id="universe-image-input" accept="image/*" style="display:none;" onchange="uploadUniverseImage(event)">
+                <button class="btn btn-red" onclick="deleteCurrentUniverse()" style="font-size:0.75em;padding:6px 14px;">🗑️ Удалить вселенную</button>
+            </div>
+        </div>
+        <div id="universe-add-actions" style="text-align:center; margin-top:15px; display:none;">
+            <button class="btn btn-gold" onclick="showAddUniverseModal()">➕ Добавить вселенную</button>
+        </div>
+    </section>
+
+    <!-- БИОГРАФИЯ -->
+    <section class="section" id="bio-section">
+        <h2 class="section-title">👤 БИОГРАФИЯ</h2>
+        <div class="bio-tabs">
+            <button class="bio-tab active" onclick="switchBio('author')">Ярослав Бородач</button>
+            <button class="bio-tab" onclick="switchBio('team')">Команда Бородач</button>
+        </div>
+        <div class="bio-content" id="bio-content">
+            <img id="bio-avatar" src="" alt="Фото" style="display:none;">
+            <p id="bio-text">Загрузка...</p>
+            <div id="bio-admin-actions" style="display:none; margin-top:12px; text-align:right;">
+                <button class="btn btn-gold" onclick="editBio()" style="font-size:0.75em;padding:6px 14px;">✏️ Редактировать</button>
+                <button class="btn btn-gold" onclick="document.getElementById('bio-avatar-input').click()" style="font-size:0.75em;padding:6px 14px;">📷 Сменить фото</button>
+                <input type="file" id="bio-avatar-input" accept="image/*" style="display:none;" onchange="uploadBioAvatar(event)">
+            </div>
+        </div>
+    </section>
+
+    <!-- КОМАНДА -->
+    <section class="section" id="team-section">
+        <h2 class="section-title">👥 КОМАНДА БОРОДАЧ</h2>
+        <p class="section-subtitle">ждем в команде пишите на @BorodahcYaroslav</p>
+        <div class="team-list" id="team-list"></div>
+        <div id="team-admin-actions" style="text-align:center; margin-top:15px; display:none;">
+            <button class="btn btn-gold" onclick="showAddTeamMemberModal()">➕ Добавить участника</button>
+        </div>
+    </section>
+
+    <!-- КНИГИ -->
+    <section class="section" id="books-section">
+        <h2 class="section-title">📚 КНИГИ</h2>
+        <p class="section-subtitle">Серия «Аркей. Марш Справедливости»</p>
+        <div class="cards-grid" id="books-container"></div>
+        <div class="admin-actions" id="books-admin-actions" style="justify-content:center; margin-top:15px;">
+            <button class="btn btn-gold" onclick="addContentItem('book')">➕ Добавить книгу</button>
+        </div>
+    </section>
+
+    <!-- ДОНАТЫ -->
+    <section class="section" id="donate-section">
+        <h2 class="section-title">💎 ДОНАТЫ</h2>
+        <p class="section-subtitle">Поддержите автора (СКОРО)</p>
+        <div class="cards-grid" id="donates-container"></div>
+        <div class="admin-actions" id="donates-admin-actions" style="justify-content:center; margin-top:15px;">
+            <button class="btn btn-gold" onclick="addContentItem('donate')">➕ Добавить донат</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Ярослав Бородач. Все права защищены.</p>
+        <p>Вселенная Аркейстан и последующие вселенные</p>
+    </footer>
+
+    <!-- Модалки -->
+    <div class="modal" id="login-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('login-modal')">✕</button><h3>🔑 Вход</h3><label>Email:</label><input type="email" id="login-email" placeholder="Введите email"><label>Пароль:</label><input type="password" id="login-password" placeholder="Пароль"><p style="color:var(--red-light);display:none;" id="login-error">Неверно</p><button class="btn btn-gold" onclick="login()" style="width:100%;">Войти</button></div></div>
+    <div class="modal" id="register-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('register-modal')">✕</button><h3>📝 Регистрация</h3><label>Имя:</label><input type="text" id="reg-name" placeholder="Ваше имя"><label>Email:</label><input type="email" id="reg-email" placeholder="email@example.com"><label>Пароль:</label><input type="password" id="reg-password" placeholder="Придумайте пароль"><p style="color:var(--red-light);display:none;" id="reg-error"></p><button class="btn btn-gold" onclick="register()" style="width:100%;">Зарегистрироваться</button></div></div>
+    <div class="modal" id="edit-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('edit-modal')">✕</button><h3>Редактировать</h3><label>Название:</label><input type="text" id="edit-name"><label>Серия:</label><input type="text" id="edit-series"><label>Описание:</label><textarea id="edit-desc"></textarea><label>Цена (₽):</label><input type="number" id="edit-price" min="0" value="0"><label>Обложка (файл):</label><div class="file-upload-area" onclick="document.getElementById('edit-cover-file').click()">Загрузить с ПК</div><input type="file" id="edit-cover-file" accept="image/*" style="display:none;" onchange="previewCover(event)"><img id="edit-cover-preview" style="max-width:100px;display:none;margin:5px 0;border-radius:4px;"><label>Или URL:</label><input type="text" id="edit-cover-url" placeholder="https://..."><label>Статус:</label><select id="edit-status"><option value="new">НОВИНКА</option><option value="free">БЕСПЛАТНО</option><option value="soon">СКОРО</option><option value="premium">ПРЕМИУМ</option></select><button class="btn btn-gold" onclick="saveEdit()" style="width:100%;margin-top:8px;">💾 Сохранить</button></div></div>
+    <div class="modal reader-modal" id="reader-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('reader-modal')">✕</button><h3 id="reader-title"></h3><div class="book-viewer"><div class="book-page left" id="page-left"></div><div class="book-page right" id="page-right" style="display:none;"></div></div><div class="page-nav"><button onclick="prevPage()">◀</button><span class="page-info" id="page-info"></span><button onclick="nextPage()">▶</button><button class="btn btn-gold" onclick="downloadBook()">📥 Скачать</button><button class="btn btn-outline" id="add-illustration-btn" style="display:none;" onclick="addIllustration()">🖼️ +Иллюстрация</button></div></div></div>
+    <div class="modal" id="admin-panel-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('admin-panel-modal')">✕</button><h3>⚙️ Админ-панель</h3><button class="btn btn-gold" onclick="showAdminsModal()" style="width:100%;margin:3px 0;">👥 Управление админами</button><button class="btn btn-gold" onclick="showCardModal()" style="width:100%;margin:3px 0;">💳 Привязать карту</button><button class="btn btn-red" onclick="toggleEditMode()" style="width:100%;margin:3px 0;" id="edit-mode-btn">✏️ Включить редактирование</button><button class="btn btn-outline" onclick="exportData()" style="width:100%;margin:3px 0;">📤 Экспорт</button><button class="btn btn-outline" onclick="importData()" style="width:100%;margin:3px 0;">📥 Импорт</button></div></div>
+    <div class="modal" id="admins-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('admins-modal')">✕</button><h3>👥 Админы</h3><div id="admins-list"></div><label>Email:</label><input type="email" id="new-admin-email"><label>Пароль:</label><input type="password" id="new-admin-password"><button class="btn btn-gold" onclick="addAdmin()" style="width:100%;">➕ Добавить</button></div></div>
+    <div class="modal" id="card-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('card-modal')">✕</button><h3>💳 Карта</h3><label>Номер:</label><input type="text" id="card-number" maxlength="19"><label>Держатель:</label><input type="text" id="card-holder"><label>Срок:</label><input type="text" id="card-expiry" maxlength="5"><button class="btn btn-gold" onclick="saveCard()" style="width:100%;margin-top:8px;">💾 Привязать</button></div></div>
+    <div class="modal" id="team-add-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('team-add-modal')">✕</button><h3>➕ Добавить участника</h3><label>Имя:</label><input type="text" id="team-member-name"><label>Роль:</label><input type="text" id="team-member-role"><label>Фото:</label><div class="file-upload-area" onclick="document.getElementById('team-member-photo').click()">Загрузить фото</div><input type="file" id="team-member-photo" accept="image/*" style="display:none;" onchange="previewTeamPhoto(event)"><img id="team-photo-preview" style="max-width:80px;display:none;margin:5px 0;border-radius:4px;"><button class="btn btn-gold" onclick="addTeamMember()" style="width:100%;margin-top:8px;">✅ Добавить</button></div></div>
+    <!-- Модалка добавления вселенной -->
+    <div class="modal" id="universe-add-modal"><div class="modal-content"><button class="modal-close" onclick="closeModal('universe-add-modal')">✕</button><h3>➕ Добавить вселенную</h3><label>Название:</label><input type="text" id="universe-name" placeholder="Название вселенной"><label>Ключ (латиница):</label><input type="text" id="universe-key" placeholder="nazvanie"><label>Иконка:</label><input type="text" id="universe-icon" placeholder="🏰"><label>Описание:</label><textarea id="universe-desc"></textarea><label>Изображение (файл):</label><div class="file-upload-area" onclick="document.getElementById('universe-file').click()">Загрузить с ПК</div><input type="file" id="universe-file" accept="image/*" style="display:none;" onchange="previewUniversePhoto(event)"><img id="universe-photo-preview" style="max-width:100px;display:none;margin:5px 0;border-radius:4px;"><button class="btn btn-gold" onclick="addUniverse()" style="width:100%;margin-top:8px;">✅ Добавить</button></div></div>
+
+    <script>
+        // ==================== ДАННЫЕ ====================
+        const MAIN_ADMIN_EMAIL = 'yarbor0912@gmail.com';
+        const MAIN_ADMIN_PASSWORD = 'ArkyeVkrasnye3690';
+        const TEAM_PASSWORD = 'ArkyeVkrasnye3690';
+
+        function hashPassword(p) { let h = 0; for (let i = 0; i < p.length; i++) { h = ((h << 5) - h) + p.charCodeAt(i); h |= 0; } return Math.abs(h).toString(36); }
+        const MAIN_ADMIN_HASH = hashPassword(MAIN_ADMIN_PASSWORD);
+        function sanitize(s) { if (typeof s !== 'string') return s; return s.replace(/[<>{}()]/g, '').replace(/script/gi, '').replace(/on\w+=/gi, '').trim(); }
+
+        let admins = JSON.parse(localStorage.getItem('swill_admins') || '[]');
+        if (admins.length === 0) { admins = [{ email: MAIN_ADMIN_EMAIL, passwordHash: MAIN_ADMIN_HASH, isMain: true }]; saveAdmins(); }
+        function saveAdmins() { localStorage.setItem('swill_admins', JSON.stringify(admins)); }
+
+        let users = JSON.parse(localStorage.getItem('swill_users') || '[]');
+        function saveUsers() { localStorage.setItem('swill_users', JSON.stringify(users)); }
+
+        let teamMembers = JSON.parse(localStorage.getItem('swill_team') || '[]');
+        function saveTeam() { localStorage.setItem('swill_team', JSON.stringify(teamMembers)); }
+
+        let bioData = JSON.parse(localStorage.getItem('swill_bio') || JSON.stringify({
+            author: { text: 'Ярослав Бородач — писатель, создатель вселенной «Аркей. Марш Справедливости».', avatar: '' },
+            team: { text: 'Команда Бородач — энтузиасты, помогающие создавать книги.', avatar: '' }
+        }));
+        function saveBio() { localStorage.setItem('swill_bio', JSON.stringify(bioData)); }
+
+        // ВСЕЛЕННАЯ (ПУСТАЯ - админ добавляет сам)
+        let universeData = JSON.parse(localStorage.getItem('swill_universe') || '{}');
+        let universeKeys = Object.keys(universeData);
+        if (universeKeys.length === 0) {
+            universeKeys = [];
+        }
+        function saveUniverse() { localStorage.setItem('swill_universe', JSON.stringify(universeData)); }
+
+        let isAdmin = false, adminMode = false, isLoggedIn = false, currentUser = null;
+        let currentEditType = '', currentEditIndex = -1, currentBioTab = 'author', currentUniverseTab = '';
+        let currentBookIdx = -1, currentPage = 0, totalPages = 1, pages = [];
+        let cardData = JSON.parse(localStorage.getItem('swill_card') || 'null');
+        let tempCoverFile = null, tempTeamPhoto = null, tempUniversePhoto = null;
+
+        let books = JSON.parse(localStorage.getItem('swill_books') || JSON.stringify([
+            { title: 'Пробуждение Императора', series: 'ТОМ I', desc: 'Аркей просыпается в горящем Аркейстане.', price: 299, status: 'new', coverUrl: '', icon: '📖', type: 'book', content: 'Глава 1. Пробуждение.\n\nАркей открыл глаза. Вокруг горели золотые стены.\n\n===PAGE===\nГлава 2. Совет.\n\nВ тронном зале собрались советники.' },
+            { title: 'Марш на Аристократку', series: 'ТОМ II', desc: 'Аркей ведёт армию на земли Ари.', price: 349, status: 'new', coverUrl: '', icon: '📗', type: 'book', content: 'Глава 1. Десять тысяч.\n\nКолонна выступила в полдень.\n\n===PAGE===\nГлава 2. Крепость.\n\nСтены Аристократки белели.' },
+            { title: 'Тени Ворона', series: 'ТОМ III', desc: 'Ворон захватил трон Немо.', price: 0, status: 'free', coverUrl: '', icon: '📘', type: 'book', content: 'Глава 1. Тени.\n\nНемо лежал в госпитале.\n\n===PAGE===\nГлава 2. Улики.\n\nАстрон нашёл письмо.' },
+        ]));
+        let donates = JSON.parse(localStorage.getItem('swill_donates') || JSON.stringify([
+            { title: 'Поддержка автора', series: 'ДОНАТ', desc: 'Помогите создавать книги!', price: 100, status: 'soon', coverUrl: '', icon: '💎', type: 'donate', content: '' },
+        ]));
+        function saveAllData() { localStorage.setItem('swill_books', JSON.stringify(books)); localStorage.setItem('swill_donates', JSON.stringify(donates)); }
+
+        // ==================== ОТРИСОВКА ====================
+        function renderCards(cid, items) {
+            document.getElementById(cid).innerHTML = items.map((item, i) => `
+                <div class="card">
+                    <span class="status-badge badge-${item.status}">${item.status==='new'?'НОВИНКА':item.status==='free'?'БЕСПЛАТНО':item.status==='soon'?'СКОРО':'ПРЕМИУМ'}</span>
+                    <div class="card-cover" style="${item.coverUrl&&!item.coverUrl.startsWith('data:')?`background-image:url(${sanitize(item.coverUrl)})`:''}">${item.coverUrl?`<img src="${sanitize(item.coverUrl)}" alt="Обложка">`:item.icon}</div>
+                    <div class="card-info">
+                        <p class="card-series">${sanitize(item.series)}</p><h3>${sanitize(item.title)}</h3><p>${sanitize(item.desc)}</p>
+                        <p class="price ${item.price===0?'free':''}">${item.price===0?'БЕСПЛАТНО':item.price+' ₽'}</p>
+                        <button class="btn btn-gold" onclick="openBook(${i},'${item.type}')" style="padding:6px 12px;font-size:0.7em;">📖 Читать</button>
+                        ${item.price>0?`<button class="btn btn-outline" onclick="buyItem('${sanitize(item.title)}',${item.price})" style="padding:6px 12px;font-size:0.7em;">Купить</button>`:''}
+                        ${adminMode?`<div class="admin-actions active"><button class="btn btn-gold" onclick="event.stopPropagation();editItem('${item.type}',${i})">✏️</button><button class="btn" style="background:#c0392b;color:#fff;" onclick="event.stopPropagation();deleteItem('${item.type}',${i})">🗑️</button></div>`:''}
+                    </div>
+                </div>`).join('');
+        }
+
+        function renderAll() {
+            renderCards('books-container', books);
+            renderCards('donates-container', donates);
+            document.getElementById('books-admin-actions').style.display = adminMode ? 'flex' : 'none';
+            document.getElementById('donates-admin-actions').style.display = adminMode ? 'flex' : 'none';
+            document.getElementById('team-admin-actions').style.display = adminMode ? 'block' : 'none';
+            document.getElementById('bio-admin-actions').style.display = adminMode ? 'block' : 'none';
+            document.getElementById('universe-admin-actions').style.display = (adminMode && currentUniverseTab) ? 'block' : 'none';
+            document.getElementById('universe-add-actions').style.display = adminMode ? 'block' : 'none';
+            renderTeam();
+            renderBio();
+            renderUniverseTabs();
+        }
+
+        function renderTeam() {
+            document.getElementById('team-list').innerHTML = teamMembers.map((m, i) => `
+                <div class="team-member">
+                    <span>${m.photo?`<img src="${m.photo}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;">`:''} <b>${sanitize(m.name)}</b> — ${sanitize(m.role)}</span>
+                    ${adminMode?`<button class="btn" style="background:#c0392b;color:#fff;padding:4px 10px;font-size:0.65em;" onclick="removeTeamMember(${i})">🗑️</button>`:''}
+                </div>`).join('');
+        }
+
+        function renderBio() {
+            const data = bioData[currentBioTab];
+            document.getElementById('bio-text').textContent = data.text || 'Биография пока не добавлена.';
+            const avatar = document.getElementById('bio-avatar');
+            if (data.avatar) { avatar.src = data.avatar; avatar.style.display = 'block'; } else { avatar.style.display = 'none'; }
+        }
+
+        function renderUniverseTabs() {
+            universeKeys = Object.keys(universeData);
+            const tabsContainer = document.getElementById('universe-tabs');
+            tabsContainer.innerHTML = universeKeys.map(key => {
+                const u = universeData[key];
+                return `<button class="universe-tab${currentUniverseTab===key?' active':''}" onclick="switchUniverse('${key}')">${u.icon||'🌌'} ${u.name||key}</button>`;
+            }).join('');
+            if (currentUniverseTab && universeData[currentUniverseTab]) {
+                renderUniverseContent();
+            } else if (universeKeys.length > 0) {
+                switchUniverse(universeKeys[0]);
+            } else {
+                document.getElementById('universe-text').textContent = 'Нет добавленных вселенных. Администратор может добавить их через админ-панель.';
+                document.getElementById('universe-image').style.display = 'none';
+                document.getElementById('universe-admin-actions').style.display = 'none';
+            }
+        }
+
+        function renderUniverseContent() {
+            if (!currentUniverseTab || !universeData[currentUniverseTab]) return;
+            const data = universeData[currentUniverseTab];
+            document.getElementById('universe-text').textContent = data.text || 'Описание пока не добавлено.';
+            const img = document.getElementById('universe-image');
+            if (data.image) { img.src = data.image; img.style.display = 'block'; } else { img.style.display = 'none'; }
+            document.getElementById('universe-admin-actions').style.display = adminMode ? 'block' : 'none';
+        }
+
+        function switchBio(tab) { currentBioTab = tab; document.querySelectorAll('.bio-tab').forEach((b, i) => b.classList.toggle('active', (i===0&&tab==='author')||(i===1&&tab==='team'))); renderBio(); }
+        function switchUniverse(key) { currentUniverseTab = key; renderUniverseTabs(); }
+
+        function editBio() { const el = document.getElementById('bio-text'); el.contentEditable = el.contentEditable === 'true' ? 'false' : 'true'; if (el.contentEditable === 'true') el.focus(); else { bioData[currentBioTab].text = el.textContent; saveBio(); showToast('✅ Сохранено!', 'success'); } }
+        function editUniverse() { const el = document.getElementById('universe-text'); el.contentEditable = el.contentEditable === 'true' ? 'false' : 'true'; if (el.contentEditable === 'true') el.focus(); else { if (currentUniverseTab && universeData[currentUniverseTab]) { universeData[currentUniverseTab].text = el.textContent; saveUniverse(); showToast('✅ Сохранено!', 'success'); } } }
+
+        function uploadBioAvatar(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { bioData[currentBioTab].avatar = ev.target.result; saveBio(); renderBio(); showToast('📷 Обновлено!', 'success'); }; reader.readAsDataURL(file); }
+        function uploadUniverseImage(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { if (currentUniverseTab && universeData[currentUniverseTab]) { universeData[currentUniverseTab].image = ev.target.result; saveUniverse(); renderUniverseContent(); showToast('📷 Обновлено!', 'success'); } }; reader.readAsDataURL(file); }
+
+        // ДОБАВЛЕНИЕ ВСЕЛЕННОЙ
+        function showAddUniverseModal() { document.getElementById('universe-add-modal').classList.add('active'); }
+        function previewUniversePhoto(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { tempUniversePhoto = ev.target.result; document.getElementById('universe-photo-preview').src = ev.target.result; document.getElementById('universe-photo-preview').style.display = 'block'; }; reader.readAsDataURL(file); }
+        function addUniverse() {
+            const name = sanitize(document.getElementById('universe-name').value.trim());
+            const key = sanitize(document.getElementById('universe-key').value.trim().toLowerCase());
+            const icon = sanitize(document.getElementById('universe-icon').value.trim()) || '🌌';
+            const desc = sanitize(document.getElementById('universe-desc').value.trim());
+            if (!name || !key) { showToast('❌ Заполните название и ключ', 'error'); return; }
+            if (universeData[key]) { showToast('❌ Ключ уже существует', 'error'); return; }
+            universeData[key] = { name, icon, text: desc, image: tempUniversePhoto || '' };
+            saveUniverse(); closeModal('universe-add-modal'); currentUniverseTab = key; tempUniversePhoto = null;
+            document.getElementById('universe-photo-preview').style.display = 'none';
+            renderAll(); showToast('✅ Вселенная добавлена!', 'success');
+        }
+        function deleteCurrentUniverse() {
+            if (!currentUniverseTab || !universeData[currentUniverseTab]) return;
+            if (!confirm(`Удалить вселенную "${universeData[currentUniverseTab].name}"?`)) return;
+            delete universeData[currentUniverseTab]; saveUniverse(); currentUniverseTab = Object.keys(universeData)[0] || '';
+            renderAll(); showToast('🗑️ Вселенная удалена', 'warning');
+        }
+
+        function showAddTeamMemberModal() { document.getElementById('team-add-modal').classList.add('active'); }
+        function previewTeamPhoto(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { tempTeamPhoto = ev.target.result; document.getElementById('team-photo-preview').src = ev.target.result; document.getElementById('team-photo-preview').style.display = 'block'; }; reader.readAsDataURL(file); }
+        function addTeamMember() { const name = sanitize(document.getElementById('team-member-name').value.trim()); const role = sanitize(document.getElementById('team-member-role').value.trim()); if (!name || !role) { showToast('❌ Заполните', 'error'); return; } teamMembers.push({ name, role, photo: tempTeamPhoto || '' }); saveTeam(); closeModal('team-add-modal'); renderTeam(); tempTeamPhoto = null; showToast('✅ Добавлен!', 'success'); }
+        function removeTeamMember(i) { teamMembers.splice(i, 1); saveTeam(); renderTeam(); }
+
+        // Читатель
+        function openBook(index, type) { currentBookIdx = index; const item = type === 'book' ? books[index] : donates[index]; document.getElementById('reader-title').textContent = item.title; pages = (item.content || 'Текст не добавлен.').split('===PAGE===').map(p => p.trim()); totalPages = pages.length; currentPage = 0; renderPages(); document.getElementById('reader-modal').classList.add('active'); document.getElementById('add-illustration-btn').style.display = adminMode ? 'inline-block' : 'none'; }
+        function renderPages() { const left = document.getElementById('page-left'), right = document.getElementById('page-right'); if (totalPages === 1) { left.className = 'book-page single'; left.innerHTML = fmtPage(pages[0], 0); right.style.display = 'none'; } else if (currentPage === 0) { left.className = 'book-page left'; left.innerHTML = fmtPage(pages[0], 0); right.style.display = 'block'; right.className = 'book-page right'; right.innerHTML = totalPages > 1 ? fmtPage(pages[1], 1) : ''; } else if (currentPage >= totalPages - 1) { left.className = 'book-page single'; left.innerHTML = fmtPage(pages[totalPages - 1], totalPages - 1); right.style.display = 'none'; } else { left.className = 'book-page left'; left.innerHTML = fmtPage(pages[currentPage], currentPage); right.style.display = 'block'; right.className = 'book-page right'; right.innerHTML = currentPage + 1 < totalPages ? fmtPage(pages[currentPage + 1], currentPage + 1) : ''; } document.getElementById('page-info').textContent = `Стр. ${currentPage+1}${totalPages>1?'–'+Math.min(currentPage+2,totalPages):''} из ${totalPages}`; }
+        function fmtPage(c, n) { return sanitize(c).replace(/\[IMG:(.*?)\]/g, '<img src="$1" alt="Иллюстрация">').replace(/\n/g, '<br>') + `<span class="page-number">${n+1}</span>`; }
+        function nextPage() { if (currentPage + 2 < totalPages) { currentPage += 2; document.getElementById('page-left').classList.add('flip-left'); setTimeout(() => document.getElementById('page-left').classList.remove('flip-left'), 400); renderPages(); } else if (currentPage + 1 < totalPages) { currentPage++; renderPages(); } }
+        function prevPage() { if (currentPage - 2 >= 0) { currentPage -= 2; document.getElementById('page-right').classList.add('flip-right'); setTimeout(() => document.getElementById('page-right').classList.remove('flip-right'), 400); renderPages(); } else if (currentPage - 1 >= 0) { currentPage--; renderPages(); } }
+        function addIllustration() { if (!adminMode || currentBookIdx < 0) return; const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.onchange = function(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(ev) { books[currentBookIdx].content = (books[currentBookIdx].content || '') + '\n\n[IMG:' + ev.target.result + ']'; saveAllData(); pages = books[currentBookIdx].content.split('===PAGE===').map(p => p.trim()); totalPages = pages.length; renderPages(); showToast('🖼️ Добавлено!', 'success'); }; reader.readAsDataURL(file); }; input.click(); }
+        function downloadBook() { if (currentBookIdx < 0) return; const book = books[currentBookIdx]; const text = book.content.replace(/===PAGE===/g, '\n\n').replace(/\[IMG:(.*?)\]/g, '[Иллюстрация]'); const blob = new Blob([book.title + '\n\n' + text], { type: 'text/plain;charset=utf-8' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = sanitize(book.title).replace(/\s/g, '_') + '.txt'; a.click(); showToast('📥 Скачано!', 'success'); }
+
+        // Авторизация
+        function showLoginModal() { document.getElementById('login-modal').classList.add('active'); }
+        function showRegisterModal() { document.getElementById('register-modal').classList.add('active'); }
+        function login() { const email = sanitize(document.getElementById('login-email').value.trim().toLowerCase()); const pw = document.getElementById('login-password').value; const hash = hashPassword(pw); const admin = admins.find(a => a.email === email && a.passwordHash === hash); if (admin) { isAdmin = true; adminMode = true; isLoggedIn = true; currentUser = { email, isAdmin: true }; saveSession(email, hash); updateNav(); closeModal('login-modal'); renderAll(); showToast('✅ Администратор!', 'success'); return; } const user = users.find(u => u.email === email && u.passwordHash === hash); if (user) { isAdmin = false; adminMode = false; isLoggedIn = true; currentUser = { email, isAdmin: false }; saveSession(email, hash); updateNav(); closeModal('login-modal'); renderAll(); showToast('✅ Добро пожаловать!', 'success'); return; } document.getElementById('login-error').style.display = 'block'; }
+        function register() { const name = sanitize(document.getElementById('reg-name').value.trim()); const email = sanitize(document.getElementById('reg-email').value.trim().toLowerCase()); const pw = document.getElementById('reg-password').value; if (!name || !email || !pw) { document.getElementById('reg-error').style.display = 'block'; document.getElementById('reg-error').textContent = 'Заполните все поля'; return; } if (users.find(u => u.email === email) || admins.find(a => a.email === email)) { document.getElementById('reg-error').textContent = 'Email занят'; document.getElementById('reg-error').style.display = 'block'; return; } if (pw === TEAM_PASSWORD) { users.push({ name, email, passwordHash: hashPassword(pw), isTeam: true }); teamMembers.push({ name, role: 'Участник команды', photo: '' }); saveTeam(); renderTeam(); showToast('🎉 Вы в Команде!', 'success'); } else { users.push({ name, email, passwordHash: hashPassword(pw), isTeam: false }); } saveUsers(); closeModal('register-modal'); showToast('✅ Регистрация успешна!', 'success'); }
+        function logout() { isAdmin = false; adminMode = false; isLoggedIn = false; currentUser = null; clearSession(); updateNav(); renderAll(); showToast('Вы вышли.', 'warning'); }
+        function updateNav() { document.getElementById('login-nav-btn').style.display = isLoggedIn ? 'none' : 'inline-block'; document.getElementById('register-nav-btn').style.display = isLoggedIn ? 'none' : 'inline-block'; document.getElementById('logout-nav-btn').style.display = isLoggedIn ? 'inline-block' : 'none'; document.getElementById('admin-nav-btn').style.display = isAdmin ? 'inline-block' : 'none'; }
+        function saveSession(email, hash) { localStorage.setItem('swill_session', JSON.stringify({ email, passwordHash: hash })); }
+        function clearSession() { localStorage.removeItem('swill_session'); }
+        function autoLogin() { const s = JSON.parse(localStorage.getItem('swill_session') || 'null'); if (s?.email) { const a = admins.find(x => x.email === s.email && x.passwordHash === s.passwordHash); if (a) { isAdmin = true; adminMode = true; isLoggedIn = true; currentUser = { email: s.email, isAdmin: true }; } else { const u = users.find(x => x.email === s.email && x.passwordHash === s.passwordHash); if (u) { isAdmin = false; adminMode = false; isLoggedIn = true; currentUser = { email: s.email, isAdmin: false }; } } } }
+
+        // Админ
+        function toggleAdminPanel() { document.getElementById('admin-panel-modal').classList.add('active'); }
+        function toggleEditMode() { adminMode = !adminMode; document.getElementById('edit-mode-btn').textContent = adminMode ? '✏️ Выключить' : '✏️ Включить'; renderAll(); }
+        function previewCover(e) { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = ev => { tempCoverFile = ev.target.result; document.getElementById('edit-cover-preview').src = ev.target.result; document.getElementById('edit-cover-preview').style.display = 'block'; }; r.readAsDataURL(f); }
+        function editItem(type, idx) { currentEditType = type; currentEditIndex = idx; tempCoverFile = null; const item = type === 'book' ? books[idx] : donates[idx]; document.getElementById('edit-modal').querySelector('h3').textContent = item.title; document.getElementById('edit-name').value = item.title; document.getElementById('edit-series').value = item.series; document.getElementById('edit-desc').value = item.desc; document.getElementById('edit-price').value = item.price; document.getElementById('edit-cover-url').value = item.coverUrl && !item.coverUrl.startsWith('data:') ? item.coverUrl : ''; document.getElementById('edit-cover-preview').style.display = item.coverUrl ? 'block' : 'none'; document.getElementById('edit-cover-preview').src = item.coverUrl || ''; document.getElementById('edit-status').value = item.status; document.getElementById('edit-modal').classList.add('active'); }
+        function saveEdit() { const d = { title: sanitize(document.getElementById('edit-name').value) || 'Без названия', series: sanitize(document.getElementById('edit-series').value), desc: sanitize(document.getElementById('edit-desc').value), price: parseInt(document.getElementById('edit-price').value) || 0, coverUrl: tempCoverFile || sanitize(document.getElementById('edit-cover-url').value), status: document.getElementById('edit-status').value }; const item = currentEditType === 'book' ? books[currentEditIndex] : donates[currentEditIndex]; Object.assign(item, d); saveAllData(); closeModal('edit-modal'); renderAll(); showToast('✅ Сохранено!', 'success'); }
+        function deleteItem(type, idx) { if (!confirm('Удалить?')) return; if (type === 'book') books.splice(idx, 1); else donates.splice(idx, 1); saveAllData(); renderAll(); }
+        function addContentItem(type) { const item = { title: 'Новое', series: type === 'book' ? 'ТОМ' : 'ДОНАТ', desc: 'Описание...', price: 0, status: 'new', coverUrl: '', icon: type === 'book' ? '📖' : '💎', type, content: '' }; if (type === 'book') books.push(item); else donates.push(item); saveAllData(); renderAll(); }
+        function showAdminsModal() { document.getElementById('admins-list').innerHTML = admins.map((a, i) => `<p style="margin:4px 0;display:flex;justify-content:space-between;"><span>*****@*****.*** ${a.isMain?'(Главный)':''}</span>${!a.isMain?`<button class="btn btn-outline" style="padding:2px 6px;font-size:0.6em;color:#c0392b;" onclick="removeAdmin(${i})">🗑️</button>`:''}</p>`).join(''); document.getElementById('admins-modal').classList.add('active'); }
+        function addAdmin() { const e = sanitize(document.getElementById('new-admin-email').value.trim().toLowerCase()); const p = document.getElementById('new-admin-password').value; if (!e || !p) { showToast('❌ Заполните', 'error'); return; } admins.push({ email: e, passwordHash: hashPassword(p), isMain: false }); saveAdmins(); showAdminsModal(); showToast('✅ Добавлен!', 'success'); }
+        function removeAdmin(i) { if (admins[i].isMain) return; admins.splice(i, 1); saveAdmins(); showAdminsModal(); }
+        function showCardModal() { document.getElementById('card-modal').classList.add('active'); if (cardData) { document.getElementById('card-number').value = cardData.number || ''; document.getElementById('card-holder').value = cardData.holder || ''; document.getElementById('card-expiry').value = cardData.expiry || ''; } }
+        function saveCard() { cardData = { number: sanitize(document.getElementById('card-number').value), holder: sanitize(document.getElementById('card-holder').value), expiry: sanitize(document.getElementById('card-expiry').value) }; localStorage.setItem('swill_card', JSON.stringify(cardData)); closeModal('card-modal'); showToast('💳 Привязано!', 'success'); }
+        function exportData() { const d = { books, donates, bioData, universeData, teamMembers }; const b = new Blob([JSON.stringify(d)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'swill_backup.json'; a.click(); }
+        function importData() { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json'; inp.onchange = e => { const r = new FileReader(); r.onload = ev => { try { const d = JSON.parse(ev.target.result); if (d.books) books = d.books; if (d.donates) donates = d.donates; if (d.bioData) bioData = d.bioData; if (d.universeData) universeData = d.universeData; if (d.teamMembers) teamMembers = d.teamMembers; saveAllData(); saveBio(); saveUniverse(); saveTeam(); renderAll(); showToast('📥 Импортировано!', 'success'); } catch { showToast('❌ Ошибка', 'error'); } }; r.readAsText(e.target.files[0]); }; inp.click(); }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function buyItem(t, p) { showToast(`🛒 ${t} (${p} ₽)`, 'success'); }
+        function showToast(m, t = 'success') { const el = document.createElement('div'); el.className = `toast toast-${t}`; el.textContent = m; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active')); });
+        document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); }));
+
+        // СОЗДАНИЕ ЧАСТИЦ-ПЕПЛА (заменяем старые смайлы)
+        (() => {
+            const ashes = ['·', '.', '•', '○', '◦', '*', '°', '·']; // символы пепла
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('span');
+                p.className = 'particle';
+                p.textContent = ashes[Math.floor(Math.random() * ashes.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (10 + Math.random() * 14) + 's';
+                p.style.animationDelay = Math.random() * 12 + 's';
+                p.style.fontSize = (8 + Math.random() * 10) + 'px';
+                p.style.opacity = 0.2 + Math.random() * 0.4;
+                p.style.color = `rgba(180, 170, 160, ${0.2 + Math.random() * 0.5})`;
+                document.getElementById('particles').appendChild(p);
+            }
+        })();
+
+        autoLogin();
+        renderAll();
+        updateNav();
+        if (Object.keys(universeData).length > 0) { currentUniverseTab = Object.keys(universeData)[0]; renderUniverseTabs(); }
+    </script>
+</body>
+</html>
